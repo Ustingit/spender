@@ -32,7 +32,7 @@ class RightWrapper extends React.Component {
         return(
             <div>
             {                
-                this.renderSwitch(this.state.type)
+                this.renderSwitch(this.props.type)
             }
             </div>
         );

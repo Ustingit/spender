@@ -19,6 +19,10 @@ class App extends React.Component {
     }
   }
 
+  changeType(newType){
+      this.setState({ type: newType });
+  }
+
   render (){
     return (
     <Container>
@@ -28,9 +32,9 @@ class App extends React.Component {
         <Row>
           <Col md={3} lg={3}>
               <ButtonGroup vertical>
-                  <Button onClick={ () => { this.setState({ type: WrapperType.HISTORY }) } } >History</Button>
-                  <Button onClick={ () => { this.setState({ type: WrapperType.SPEND_TYPES }) } } >Spend types</Button>
-                  <Button>About</Button>
+                  <Button onClick={ () => { this.changeType(WrapperType.HISTORY) }} >History</Button>
+                  <Button onClick={ () => { this.changeType(WrapperType.SPEND_TYPES) } } >Spend types</Button>
+                  <Button onClick={ () => { this.changeType(WrapperType.ABOUT) }} >About</Button>
               </ButtonGroup>
           </Col>
           <Col md={9} lg={9}>
