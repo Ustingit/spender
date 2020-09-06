@@ -86,8 +86,8 @@ class SpendTypes extends React.Component {
                     <Col md={12} lg={12} >
                         <ListGroup>
                             <h3>Приходы:&nbsp; 
-                                <OverlayTrigger placement="top" overlay={
-                                                                      <Tooltip id={`tooltip-top`}>
+                                <OverlayTrigger placement="right" overlay={
+                                                                      <Tooltip id={`tooltip-right`}>
                                                                             Добавить тип прихода
                                                                       </Tooltip>
                                                                     } >
@@ -108,8 +108,8 @@ class SpendTypes extends React.Component {
                                 })
                             }
                                 <h3>Расходы:&nbsp; 
-                                    <OverlayTrigger placement="top" overlay={
-                                                                          <Tooltip id={`tooltip-top`}>
+                                    <OverlayTrigger placement="right" overlay={
+                                                                          <Tooltip id={`tooltip-right`}>
                                                                                 Добавить тип расхода
                                                                           </Tooltip>
                                                                         } >
