@@ -4,10 +4,11 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
-import Button from 'react-bootstrap/Button'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 const RightPageType = {
     HISTORY: "HISTORY",
@@ -84,38 +85,49 @@ class SpendTypes extends React.Component {
                     </Col>
                     <Col md={12} lg={12} >
                         <ListGroup>
-                            <h3>Приходы: <a>
-                                    <FontAwesomeIcon icon={faPlusCircle} />
-                                </a></h3><br />                                
+                            <h3>Приходы:&nbsp; 
+                                <OverlayTrigger placement="top" overlay={
+                                                                      <Tooltip id={`tooltip-top`}>
+                                                                            Добавить тип прихода
+                                                                      </Tooltip>
+                                                                    } >
+                                    <a><FontAwesomeIcon icon={faPlusCircle} /></a>
+                                </OverlayTrigger>
+                                </h3><br />                                
                             {
-                            Object.keys(IncomeOrCostTypes.INCOME).map(function(key, index) { 
-                                return <ListGroup.Item key={IncomeOrCostTypes.INCOME[key].id} action onClick={ () => {
-                                    if (IncomeOrCostTypes.INCOME[key].default) {
-                                      notPossibleToEditDefaultType()
-                                    } else {
-                                      editType()
-                                    }
-                                  } } >
-                                        {IncomeOrCostTypes.INCOME[key].name}
-                                </ListGroup.Item>
-                            })
+                                Object.keys(IncomeOrCostTypes.INCOME).map(function(key, index) { 
+                                    return <ListGroup.Item key={IncomeOrCostTypes.INCOME[key].id} action onClick={ () => {
+                                        if (IncomeOrCostTypes.INCOME[key].default) {
+                                          notPossibleToEditDefaultType()
+                                        } else {
+                                          editType()
+                                        }
+                                      } } >
+                                            {IncomeOrCostTypes.INCOME[key].name}
+                                    </ListGroup.Item>
+                                })
                             }
-
-                            <h3>Расходы: <a>
-                                    <FontAwesomeIcon icon={faPlusCircle} />
-                                </a></h3><br />
-                            {
-                            Object.keys(IncomeOrCostTypes.COSTS).map(function(key, index) { 
-                                return <ListGroup.Item key={IncomeOrCostTypes.COSTS[key].id} action onClick={ () => {
-                                    if (IncomeOrCostTypes.COSTS[key].default) {
-                                      notPossibleToEditDefaultType()
-                                    } else {
-                                      editType()
-                                    }
-                                  } } >
-                                        {IncomeOrCostTypes.COSTS[key].name}
-                                </ListGroup.Item>
-                            })
+                                <h3>Расходы:&nbsp; 
+                                    <OverlayTrigger placement="top" overlay={
+                                                                          <Tooltip id={`tooltip-top`}>
+                                                                                Добавить тип расхода
+                                                                          </Tooltip>
+                                                                        } >
+                                        <a><FontAwesomeIcon icon={faPlusCircle} /></a>
+                                    </OverlayTrigger>
+                                    </h3><br />
+                                {
+                                    Object.keys(IncomeOrCostTypes.COSTS).map(function(key, index) { 
+                                        return <ListGroup.Item key={IncomeOrCostTypes.COSTS[key].id} action onClick={ () => {
+                                            if (IncomeOrCostTypes.COSTS[key].default) {
+                                              notPossibleToEditDefaultType()
+                                            } else {
+                                              editType()
+                                            }
+                                          } } >
+                                                {IncomeOrCostTypes.COSTS[key].name}
+                                        </ListGroup.Item>
+                                })
                             }
                         </ListGroup>
                     </Col>
