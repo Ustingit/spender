@@ -77,20 +77,20 @@ class RightWrapper extends React.Component {
     }
 }
 
-function notPossibleToEditDefaultType() {
-    alert("Стандартные типы редактировать запрещено!");
-}
-
-function editType() {
-    alert("2!");
-}
-
 class SpendTypes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showAddModal: false
         }
+    }
+
+    notPossibleToEditDefaultType() {
+        alert("Стандартные типы редактировать запрещено!");
+    }
+    
+    editType(isDefaultType) {
+        alert("2!");
     }
 
     render() {
@@ -107,35 +107,17 @@ class SpendTypes extends React.Component {
                                 </h3><br />                                
                             {
                                 Object.keys(IncomeOrCostTypes.INCOME).map(function(key, index) { 
-                                    return <ListGroup.Item key={IncomeOrCostTypes.INCOME[key].id} action onClick={ () => {
-                                        if (IncomeOrCostTypes.INCOME[key].default) {
-                                          notPossibleToEditDefaultType()
-                                        } else {
-                                          editType()
-                                        }
-                                      } } >
+                                    return <ListGroup.Item key={IncomeOrCostTypes.INCOME[key].id} action onClick={ () => this.editType(IncomeOrCostTypes.INCOME[key].default) } >
                                             {IncomeOrCostTypes.INCOME[key].name}
                                     </ListGroup.Item>
                                 })
                             }
                                 <h3>Расходы:&nbsp; 
-                                    <OverlayTrigger placement="right" overlay={
-                                                                          <Tooltip id={`tooltip-right`}>
-                                                                                Добавить тип расхода
-                                                                          </Tooltip>
-                                                                        } >
-                                        <a><FontAwesomeIcon icon={faPlusCircle} /></a>
-                                    </OverlayTrigger>
+                                    <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} />
                                     </h3><br />
                                 {
                                     Object.keys(IncomeOrCostTypes.COSTS).map(function(key, index) { 
-                                        return <ListGroup.Item key={IncomeOrCostTypes.COSTS[key].id} action onClick={ () => {
-                                            if (IncomeOrCostTypes.COSTS[key].default) {
-                                              notPossibleToEditDefaultType()
-                                            } else {
-                                              editType()
-                                            }
-                                          } } >
+                                        return <ListGroup.Item key={IncomeOrCostTypes.COSTS[key].id} action onClick={ () => this.editType(IncomeOrCostTypes.COSTS[key].default) } >
                                                 {IncomeOrCostTypes.COSTS[key].name}
                                         </ListGroup.Item>
                                 })
@@ -147,44 +129,6 @@ class SpendTypes extends React.Component {
         );
     }
 }
-
-function AddTypeModalWindow() {
-    const [show, setShow] = useState(false);
-    const [spendType, changeSpendType] = useState(HIGH_LEVEL_TYPE_INCOME);
-  
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-      <>
-        <OverlayTrigger placement="right" overlay={
-                <Tooltip id={`tooltip-right`}>
-                      Добавить тип {Words[spendType].tooltipText}
-                </Tooltip>    
-            } >
-                <a onClick={ handleShow } ><FontAwesomeIcon icon={faPlusCircle} /></a>
-        </OverlayTrigger>
-  
-        <Modal show={show} onHide={handleClose} animation={false}>
-          <Modal.Header closeButton>
-            <Modal.Title><h3>Добавление типа {Words[spendType].tooltipText}</h3></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-                <div>Добавьте имя нового типа:</div>
-                <div><input type="text" id="newTypeName" placeholder="введите название"></input></div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Закрыть
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-                Добавить
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
-  }
 
 class AddTypeModalWindowClass extends React.Component {
     constructor(props) {
@@ -219,7 +163,7 @@ class AddTypeModalWindowClass extends React.Component {
             <Modal.Title><h3>Добавление типа {Words[this.state.spendType].tooltipText}</h3></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-                <div>Добавьте имя нового типа:</div>
+                <div>Добавьте название нового типа:</div>
                 <div><input type="text" id="newTypeName" placeholder="введите название"></input></div>
           </Modal.Body>
           <Modal.Footer>
