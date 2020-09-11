@@ -81,16 +81,14 @@ class SpendTypes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAddModal: false
-        }
+            showAddModal: false,
+            types: IncomeOrCostTypes 
+        };
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    notPossibleToEditDefaultType() {
-        alert("Стандартные типы редактировать запрещено!");
-    }
-    
-    editType(isDefaultType) {
-        alert("2!");
+    handleClick() {
+        alert('Click happened');
     }
 
     render() {
@@ -106,9 +104,10 @@ class SpendTypes extends React.Component {
                             <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_INCOME} />
                                 </h3><br />                                
                             {
-                                Object.keys(IncomeOrCostTypes.INCOME).map(function(key, index) { 
-                                    return <ListGroup.Item key={IncomeOrCostTypes.INCOME[key].id} action onClick={ () => this.editType(IncomeOrCostTypes.INCOME[key].default) } >
-                                            {IncomeOrCostTypes.INCOME[key].name}
+                                Object.keys(this.state.types.INCOME).map((key, index) => { 
+                                    return <ListGroup.Item key={this.state.types.INCOME[key].id} action 
+                                                onClick={ () => this.handleClick() } >
+                                            {this.state.types.INCOME[key].name}
                                     </ListGroup.Item>
                                 })
                             }
@@ -116,9 +115,10 @@ class SpendTypes extends React.Component {
                                     <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} />
                                     </h3><br />
                                 {
-                                    Object.keys(IncomeOrCostTypes.COSTS).map(function(key, index) { 
-                                        return <ListGroup.Item key={IncomeOrCostTypes.COSTS[key].id} action onClick={ () => this.editType(IncomeOrCostTypes.COSTS[key].default) } >
-                                                {IncomeOrCostTypes.COSTS[key].name}
+                                    Object.keys(this.state.types.COSTS).map((key, index) => { 
+                                        return <ListGroup.Item key={this.state.types.COSTS[key].id} action 
+                                                    onClick={ () => this.handleClick() } >
+                                                {this.state.types.COSTS[key].name}
                                         </ListGroup.Item>
                                 })
                             }
@@ -147,6 +147,11 @@ class AddTypeModalWindowClass extends React.Component {
         this.setState({ showModal: false });
     }
 
+    handleSave(){
+        this.handleClose();
+        alert("SAVE");
+    }
+
     render() {
     return (
       <>
@@ -170,7 +175,7 @@ class AddTypeModalWindowClass extends React.Component {
             <Button variant="secondary" onClick={() => this.handleClose()}>
                 Закрыть
             </Button>
-            <Button variant="primary" onClick={() => this.handleClose()}>
+            <Button variant="primary" onClick={() => this.handleSave()}>
                 Добавить
             </Button>
           </Modal.Footer>
