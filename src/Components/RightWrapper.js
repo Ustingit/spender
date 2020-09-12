@@ -87,8 +87,10 @@ class SpendTypes extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        alert('Click happened');
+    handleClick(isDefault) {
+        if (isDefault) {
+            alert("Редактировать базовые типы запрещено.");
+        }
     }
 
     render() {
@@ -104,9 +106,9 @@ class SpendTypes extends React.Component {
                             <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_INCOME} />
                                 </h3><br />                                
                             {
-                                Object.keys(this.state.types.INCOME).map((key, index) => { 
+                                Object.keys(this.state.types.INCOME).map(key => { 
                                     return <ListGroup.Item key={this.state.types.INCOME[key].id} action 
-                                                onClick={ () => this.handleClick() } >
+                                                onClick={ () => this.handleClick(this.state.types.INCOME[key].default) } >
                                             {this.state.types.INCOME[key].name}
                                     </ListGroup.Item>
                                 })
@@ -115,9 +117,9 @@ class SpendTypes extends React.Component {
                                     <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} />
                                     </h3><br />
                                 {
-                                    Object.keys(this.state.types.COSTS).map((key, index) => { 
+                                    Object.keys(this.state.types.COSTS).map(key => { 
                                         return <ListGroup.Item key={this.state.types.COSTS[key].id} action 
-                                                    onClick={ () => this.handleClick() } >
+                                                    onClick={ () => this.handleClick(this.state.types.COSTS[key].default) } >
                                                 {this.state.types.COSTS[key].name}
                                         </ListGroup.Item>
                                 })
@@ -164,7 +166,7 @@ class AddTypeModalWindowClass extends React.Component {
         </OverlayTrigger>
   
         <Modal show={this.state.showModal} onHide={() => this.handleClose()} animation={false}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title><h3>Добавление типа {Words[this.state.spendType].tooltipText}</h3></Modal.Title>
           </Modal.Header>
           <Modal.Body>
