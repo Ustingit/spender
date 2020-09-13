@@ -11,9 +11,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-
-const HIGH_LEVEL_TYPE_INCOME = 'INCOME';
-const HIGH_LEVEL_TYPE_COSTS = 'COSTS';
+import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS, incomeTypes, costTypes } from '../Data/Types';
 
 const RightPageType = {
     HISTORY: "HISTORY",
@@ -28,20 +26,6 @@ const Words = {
     },
     'COSTS': {
         tooltipText: "расходов"
-    }
-}
-
-let IncomeOrCostTypes = {
-    INCOME: {
-        "зарплата": { id: 0, name: "зарплата", default: true, comment: "сюда входит аванс, зарплата, премии или бонусы, которые вы получили от основного или дополнительных видов деятельности", type: HIGH_LEVEL_TYPE_INCOME },
-        "долг": { id: 1, name: "долг", default: true, comment: "возврат отдолженных средств", type: HIGH_LEVEL_TYPE_INCOME },
-        "пассивный доход": { id: 2, name: "пассивный доход", default: true, comment: "доходы, полученные от депозитов, инвестиций, и т.д.", type: HIGH_LEVEL_TYPE_INCOME },
-        "подарок": { id: 3, name: "подарок", default: true, comment: "средства, подаренные по какому-либо поводу.", type: HIGH_LEVEL_TYPE_INCOME }
-    },
-    COSTS: {
-        "питание": { id: 0, name: "питание", default: true, comment: "расходы на питание.", type: HIGH_LEVEL_TYPE_COSTS },
-        "хоз. расходы": { id: 1, name: "хоз. расходы", default: true, comment: "расходы на хозяйственные нужды.", type: HIGH_LEVEL_TYPE_COSTS },
-        "транспорт": { id: 2, name: "транспорт", default: true, comment: "расходы на транспорт, такси либо шэринг.", type: HIGH_LEVEL_TYPE_COSTS }
     }
 }
 
@@ -82,15 +66,55 @@ class SpendTypes extends React.Component {
         super(props);
         this.state = {
             showAddModal: false,
-            types: IncomeOrCostTypes 
+            incomeTypes: incomeTypes,
+            costsTypes: costTypes
         };
         this.handleClick = this.handleClick.bind(this);
+        this.setNewType = this.setNewType.bind(this);
     }
 
     handleClick(isDefault) {
         if (isDefault) {
             alert("Редактировать базовые типы запрещено.");
         }
+    }
+
+    setNewType(spendType, text, comment = null) {
+        console.log("in setNewType !");
+        let oldIncomes = this.state.incomeTypes;
+        let oldCosts = this.state.costsTypes;
+
+        if (spendType){
+            if (spendType === HIGH_LEVEL_TYPE_INCOME) {
+                console.log("in inc !");
+                var maxId = oldIncomes.sort((a,b) => b.id - a.id)[0].id;
+                const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
+
+                this.setState({
+                    incomeTypes: [ ...this.state.incomeTypes, newObject ]
+                });
+
+                incomeTypes.push(newObject);
+
+                return;
+            }
+
+            if (spendType === HIGH_LEVEL_TYPE_COSTS) {
+                console.log("in costs !");
+                var maxId = oldCosts.sort((a,b) => b.id - a.id)[0].id;
+                const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
+
+                this.setState({
+                    costsTypes: [ ...this.state.costsTypes, newObject ]
+                });
+
+                costTypes.push(newObject);
+
+                return;
+            }
+        }
+
+        alert("невозможно добавить, проверьте введённые данные!");
     }
 
     render() {
@@ -103,24 +127,24 @@ class SpendTypes extends React.Component {
                     <Col md={12} lg={12} >
                         <ListGroup>
                             <h3>Приходы:&nbsp; 
-                            <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_INCOME} />
+                            <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_INCOME} setNewType={this.setNewType} />
                                 </h3><br />                                
                             {
-                                Object.keys(this.state.types.INCOME).map(key => { 
-                                    return <ListGroup.Item key={this.state.types.INCOME[key].id} action 
-                                                onClick={ () => this.handleClick(this.state.types.INCOME[key].default) } >
-                                            {this.state.types.INCOME[key].name}
+                                this.state.incomeTypes.map(typeObjectInformation => { 
+                                    return <ListGroup.Item key={typeObjectInformation.id} action 
+                                                onClick={ () => this.handleClick(typeObjectInformation.default) } >
+                                            {typeObjectInformation.name}
                                     </ListGroup.Item>
                                 })
                             }
                                 <h3>Расходы:&nbsp; 
-                                    <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} />
+                                    <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} setNewType={this.setNewType} />
                                     </h3><br />
                                 {
-                                    Object.keys(this.state.types.COSTS).map(key => { 
-                                        return <ListGroup.Item key={this.state.types.COSTS[key].id} action 
-                                                    onClick={ () => this.handleClick(this.state.types.COSTS[key].default) } >
-                                                {this.state.types.COSTS[key].name}
+                                    this.state.costsTypes.map(typeObjectInformation => { 
+                                        return <ListGroup.Item key={typeObjectInformation.id} action 
+                                                    onClick={ () => this.handleClick(typeObjectInformation.default) } >
+                                                {typeObjectInformation.name}
                                         </ListGroup.Item>
                                 })
                             }
@@ -137,7 +161,9 @@ class AddTypeModalWindowClass extends React.Component {
         super(props);
         this.state = {
             spendType: props.spendType ?? HIGH_LEVEL_TYPE_INCOME,
-            showModal: false
+            showModal: false,
+            newTypeName: "",
+            newComment: ""
         }
     }
 
@@ -149,9 +175,23 @@ class AddTypeModalWindowClass extends React.Component {
         this.setState({ showModal: false });
     }
 
-    handleSave(){
+    onNameChange = (e) => {
+        this.setState({ newTypeName: e.target.value })
+    }
+
+    onCommentChange = (e) => {
+        this.setState({ newComment: e.target.value })
+    }
+
+    handleSave(event){
+        var test = event.target.value;
+        console.log(test);
+
         this.handleClose();
-        alert("SAVE");
+        
+        if (this.props.setNewType) {
+            this.props.setNewType(this.state.spendType, this.state.newTypeName, this.state.newComment !== "" ?  this.state.newComment : this.state.newTypeName );
+        }
     }
 
     render() {
@@ -170,14 +210,14 @@ class AddTypeModalWindowClass extends React.Component {
             <Modal.Title><h3>Добавление типа {Words[this.state.spendType].tooltipText}</h3></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-                <div>Добавьте название нового типа:</div>
-                <div><input type="text" id="newTypeName" placeholder="введите название"></input></div>
+                <input type="text" placeholder="Впишите название нового типа" onChange={ this.onNameChange } /><br />
+                <input type="text" placeholder="Впишите комментарий" onChange={ this.onCommentChange } />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => this.handleClose()}>
                 Закрыть
             </Button>
-            <Button variant="primary" onClick={() => this.handleSave()}>
+            <Button variant="primary" onClick={ this.handleSave.bind(this) }>
                 Добавить
             </Button>
           </Modal.Footer>
