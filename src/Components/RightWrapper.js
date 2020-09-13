@@ -12,6 +12,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS, incomeTypes, costTypes } from '../Data/Types';
+import { EditAndDeleteItemControl } from './ItemControls';
 
 const RightPageType = {
     HISTORY: "HISTORY",
@@ -80,13 +81,11 @@ class SpendTypes extends React.Component {
     }
 
     setNewType(spendType, text, comment = null) {
-        console.log("in setNewType !");
         let oldIncomes = this.state.incomeTypes;
         let oldCosts = this.state.costsTypes;
 
         if (spendType){
             if (spendType === HIGH_LEVEL_TYPE_INCOME) {
-                console.log("in inc !");
                 var maxId = oldIncomes.sort((a,b) => b.id - a.id)[0].id;
                 const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
 
@@ -100,7 +99,6 @@ class SpendTypes extends React.Component {
             }
 
             if (spendType === HIGH_LEVEL_TYPE_COSTS) {
-                console.log("in costs !");
                 var maxId = oldCosts.sort((a,b) => b.id - a.id)[0].id;
                 const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
 
@@ -133,7 +131,7 @@ class SpendTypes extends React.Component {
                                 this.state.incomeTypes.map(typeObjectInformation => { 
                                     return <ListGroup.Item key={typeObjectInformation.id} action 
                                                 onClick={ () => this.handleClick(typeObjectInformation.default) } >
-                                            {typeObjectInformation.name}
+                                            <div>{typeObjectInformation.name} {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} objectId={typeObjectInformation.id} /> }</div>
                                     </ListGroup.Item>
                                 })
                             }
