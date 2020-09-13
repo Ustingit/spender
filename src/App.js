@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import RightWrapper, { WrapperType } from './Components/RightWrapper';
 import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, setNewList, addItemToList } from './Data/Types';
+import { Spends } from "./Data/Spends";
 
 class App extends React.Component {
 
@@ -17,7 +18,8 @@ class App extends React.Component {
     this.state = {
       type: WrapperType.HISTORY,
       incomeTypes: this.props.incomeTypes,
-      costsTypes: this.props.costTypes
+      costsTypes: this.props.costTypes,
+      history: Spends
     }
     this.setNewType = this.setNewType.bind(this);
     this.deleteType = this.deleteType.bind(this);
@@ -117,7 +119,8 @@ class App extends React.Component {
                             costsTypes={this.state.costsTypes} 
                             setNewType={this.setNewType}
                             deleteType={this.deleteType}
-                            editType={this.editExistType} />
+                            editType={this.editExistType}
+                            history={this.state.history} />
           </Col>
         </Row>
     </Container>

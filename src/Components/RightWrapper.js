@@ -7,6 +7,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { EditAndDeleteItemControl } from './ItemControls';
 import AddTypeModalWindowClass from './AddTypeModalWindowClass';
 import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS } from '../Data/Types';
+import SpendsHistory from './Spends/SpendsHistory';
 
 const RightPageType = {
     HISTORY: "HISTORY",
@@ -26,7 +27,7 @@ class RightWrapper extends React.Component {
     renderSwitch(param){
         switch (param) {
             case RightPageType.HISTORY:
-                return <div>List of spends:</div>
+                return <SpendsHistory { ...this.props } />
             case RightPageType.ABOUT:
                 return <About />
             case RightPageType.SPEND_TYPES:
