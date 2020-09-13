@@ -54,7 +54,6 @@ class App extends React.Component {
                 incomeTypes: this.state.incomeTypes.concat(newObject)
             });
             addItemToList(newObject, spendType);
-            this.forceUpdate();
         }
 
         if (spendType === HIGH_LEVEL_TYPE_COSTS) {
@@ -65,7 +64,6 @@ class App extends React.Component {
                 costsTypes: this.state.costsTypes.concat(newObject)
             });
             addItemToList(newObject, spendType);
-            this.forceUpdate();
         }
     } else {
       alert("невозможно добавить, проверьте введённые данные!");
@@ -81,9 +79,9 @@ class App extends React.Component {
         <Row>
           <Col md={3} lg={3}>
               <ButtonGroup vertical>
-                  <Button onClick={ () => { this.changeType(WrapperType.HISTORY) }} >History</Button>
-                  <Button onClick={ () => { this.changeType(WrapperType.SPEND_TYPES) } } >Spend types</Button>
-                  <Button onClick={ () => { this.changeType(WrapperType.ABOUT) }} >About</Button>
+                  <Button onClick={ () => { this.changeType(WrapperType.HISTORY) }} >История операций</Button>
+                  <Button onClick={ () => { this.changeType(WrapperType.SPEND_TYPES) } } >Типы трат и приходов</Button>
+                  <Button onClick={ () => { this.changeType(WrapperType.ABOUT) }} >О нас</Button>
               </ButtonGroup>
           </Col>
           <Col md={9} lg={9}>
