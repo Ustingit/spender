@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import EditTypeModalWindow from './EditTypeModalWindow';
 
 export class EditAndDeleteItemControl extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ export class EditAndDeleteItemControl extends React.Component {
     render() {
         return(
             <span style={{ float: "right" }} >
-                <a><FontAwesomeIcon icon={faEdit} onClick={ () => this.edit() } /></a>&nbsp;
+               <EditTypeModalWindow type={this.state.type} objectId={this.state.objectId} editType={this.props.editType} />&nbsp;
                 <a><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.delete() } /></a>
             </span>
         )

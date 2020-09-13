@@ -80,7 +80,8 @@ class SpendTypes extends React.Component {
                                                 onClick={ () => this.handleClick(typeObjectInformation.default) } >
                                             <div>{typeObjectInformation.name} {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} 
                                                                                                                                            objectId={typeObjectInformation.id} 
-                                                                                                                                           deleteType={this.props.deleteType} /> }</div>
+                                                                                                                                           deleteType={this.props.deleteType}
+                                                                                                                                           editType={this.props.editType} /> }</div>
                                     </ListGroup.Item>
                                 })
                             }
@@ -93,7 +94,8 @@ class SpendTypes extends React.Component {
                                                     onClick={ () => this.handleClick(typeObjectInformation.default) } >
                                                 <div>{typeObjectInformation.name}  {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_COSTS} 
                                                                                                                                                 objectId={typeObjectInformation.id} 
-                                                                                                                                                deleteType={this.props.deleteType} /> }</div>
+                                                                                                                                                deleteType={this.props.deleteType}
+                                                                                                                                                editType={this.props.editType} /> }</div>
                                         </ListGroup.Item>
                                 })
                             }

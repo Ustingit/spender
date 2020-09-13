@@ -21,6 +21,7 @@ class App extends React.Component {
     }
     this.setNewType = this.setNewType.bind(this);
     this.deleteType = this.deleteType.bind(this);
+    this.editExistType = this.editExistType.bind(this);
   }
 
   changeType(newType){
@@ -70,6 +71,32 @@ class App extends React.Component {
     }
   }
 
+  editExistType(objectId, type, newTypeName, newComment = null) {
+    if (objectId && type && newTypeName){
+        if (type === HIGH_LEVEL_TYPE_INCOME) {
+            const newState = this.state.incomeTypes.map(obj =>
+                obj.id === objectId ? { ...obj, name: newTypeName, comment: newComment ? newComment: newTypeName } : obj
+            );
+
+            this.setState({
+              incomeTypes: [ ...newState ]
+            })
+        }
+
+        if (type === HIGH_LEVEL_TYPE_COSTS) {
+            const newState = this.state.costsTypes.map(obj =>
+                obj.id === objectId ? { ...obj, name: newTypeName, comment: newComment ? newComment: newTypeName } : obj
+            );
+
+            this.setState({
+                costsTypes: [ ...newState ]
+            })
+        }
+    } else {
+      alert("невозможно добавить, проверьте введённые данные!");
+    }
+  }
+
   render (){
     return (
     <Container>
@@ -89,7 +116,8 @@ class App extends React.Component {
                             incomeTypes={this.state.incomeTypes} 
                             costsTypes={this.state.costsTypes} 
                             setNewType={this.setNewType}
-                            deleteType={this.deleteType} />
+                            deleteType={this.deleteType}
+                            editType={this.editExistType} />
           </Col>
         </Row>
     </Container>
