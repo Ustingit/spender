@@ -4,10 +4,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS, incomeTypes, costTypes } from '../Data/Types';
 import { EditAndDeleteItemControl } from './ItemControls';
 import AddTypeModalWindowClass from './AddTypeModalWindowClass';
+import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS } from '../Data/Types';
 
 const RightPageType = {
     HISTORY: "HISTORY",
@@ -31,7 +30,7 @@ class RightWrapper extends React.Component {
             case RightPageType.ABOUT:
                 return <About />
             case RightPageType.SPEND_TYPES:
-                return <SpendTypes />
+                return <SpendTypes { ...this.props } />
             default:
                 return <div></div>
         }
@@ -52,53 +51,15 @@ class SpendTypes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAddModal: false,
-            incomeTypes: incomeTypes,
-            costsTypes: costTypes
+            showAddModal: false
         };
         this.handleClick = this.handleClick.bind(this);
-        this.setNewType = this.setNewType.bind(this);
     }
 
     handleClick(isDefault) {
         if (isDefault) {
             alert("Редактировать базовые типы запрещено.");
         }
-    }
-
-    setNewType(spendType, text, comment = null) {
-        let oldIncomes = this.state.incomeTypes;
-        let oldCosts = this.state.costsTypes;
-
-        if (spendType){
-            if (spendType === HIGH_LEVEL_TYPE_INCOME) {
-                var maxId = oldIncomes.sort((a,b) => b.id - a.id)[0].id;
-                const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
-
-                this.setState({
-                    incomeTypes: [ ...this.state.incomeTypes, newObject ]
-                });
-
-                incomeTypes.push(newObject);
-
-                return;
-            }
-
-            if (spendType === HIGH_LEVEL_TYPE_COSTS) {
-                var maxId = oldCosts.sort((a,b) => b.id - a.id)[0].id;
-                const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
-
-                this.setState({
-                    costsTypes: [ ...this.state.costsTypes, newObject ]
-                });
-
-                costTypes.push(newObject);
-
-                return;
-            }
-        }
-
-        alert("невозможно добавить, проверьте введённые данные!");
     }
 
     render() {
@@ -111,10 +72,10 @@ class SpendTypes extends React.Component {
                     <Col md={12} lg={12} >
                         <ListGroup>
                             <h3>Приходы:&nbsp; 
-                            <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_INCOME} setNewType={this.setNewType} />
+                            <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_INCOME} setNewType={this.props.setNewType} />
                                 </h3><br />                                
                             {
-                                this.state.incomeTypes.map(typeObjectInformation => { 
+                                this.props.incomeTypes.map(typeObjectInformation => { 
                                     return <ListGroup.Item key={typeObjectInformation.id} action 
                                                 onClick={ () => this.handleClick(typeObjectInformation.default) } >
                                             <div>{typeObjectInformation.name} {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} objectId={typeObjectInformation.id} /> }</div>
@@ -122,10 +83,10 @@ class SpendTypes extends React.Component {
                                 })
                             }
                                 <h3>Расходы:&nbsp; 
-                                    <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} setNewType={this.setNewType} />
+                                    <AddTypeModalWindowClass spendType={HIGH_LEVEL_TYPE_COSTS} setNewType={this.props.setNewType} />
                                     </h3><br />
                                 {
-                                    this.state.costsTypes.map(typeObjectInformation => { 
+                                    this.props.costsTypes.map(typeObjectInformation => { 
                                         return <ListGroup.Item key={typeObjectInformation.id} action 
                                                     onClick={ () => this.handleClick(typeObjectInformation.default) } >
                                                 <div>{typeObjectInformation.name}  {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} objectId={typeObjectInformation.id} /> }</div>
