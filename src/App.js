@@ -8,7 +8,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import RightWrapper, { WrapperType } from './Components/RightWrapper';
-import { incomeTypes, costTypes, HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME } from './Data/Types';
+import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, setNewList, addItemToList } from './Data/Types';
 
 class App extends React.Component {
 
@@ -16,30 +16,45 @@ class App extends React.Component {
     super(props);
     this.state = {
       type: WrapperType.HISTORY,
-      incomeTypes: incomeTypes,
-      costsTypes: costTypes
+      incomeTypes: this.props.incomeTypes,
+      costsTypes: this.props.costTypes
     }
     this.setNewType = this.setNewType.bind(this);
+    this.deleteType = this.deleteType.bind(this);
   }
 
   changeType(newType){
       this.setState({ type: newType });
   }
 
+  deleteType(type, id) {
+      if (type = HIGH_LEVEL_TYPE_INCOME) {
+        let filteredArray = this.state.incomeTypes.filter(item => item.id !== id)
+        this.setState({incomeTypes: filteredArray});
+        setNewList(filteredArray, type);
+      } else if (type == HIGH_LEVEL_TYPE_COSTS) {
+        let filteredArray = this.state.costsTypes.filter(item => item.id !== id)
+        this.setState({costsTypes: filteredArray});
+        setNewList(filteredArray, type);
+      } else {
+        alert("Не удаловь удалить элемент с id: " + id + " типа: " + type);
+      }
+  }
+
   setNewType(spendType, text, comment = null) {
     let oldIncomes = this.state.incomeTypes;
     let oldCosts = this.state.costsTypes;
 
-    if (spendType){
+    if (spendType && text){
         if (spendType === HIGH_LEVEL_TYPE_INCOME) {
             var maxId = oldIncomes.sort((a,b) => b.id - a.id)[0].id;
             const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
 
             this.setState({
-                incomeTypes: [ ...this.state.incomeTypes, newObject ]
+                incomeTypes: this.state.incomeTypes.concat(newObject)
             });
-
-            return;
+            addItemToList(newObject, spendType);
+            this.forceUpdate();
         }
 
         if (spendType === HIGH_LEVEL_TYPE_COSTS) {
@@ -47,14 +62,14 @@ class App extends React.Component {
             const newObject = { id: maxId + 1, name: text, default: false, comment: comment ? comment : text , type: spendType };
 
             this.setState({
-                costsTypes: [ ...this.state.costsTypes, newObject ]
+                costsTypes: this.state.costsTypes.concat(newObject)
             });
-
-            return;
+            addItemToList(newObject, spendType);
+            this.forceUpdate();
         }
+    } else {
+      alert("невозможно добавить, проверьте введённые данные!");
     }
-
-    alert("невозможно добавить, проверьте введённые данные!");
   }
 
   render (){
@@ -72,7 +87,11 @@ class App extends React.Component {
               </ButtonGroup>
           </Col>
           <Col md={9} lg={9}>
-              <RightWrapper type={this.state.type} incomeTypes={this.state.incomeTypes} costsTypes={this.state.costsTypes} setNewType={this.setNewType} />
+              <RightWrapper type={this.state.type} 
+                            incomeTypes={this.state.incomeTypes} 
+                            costsTypes={this.state.costsTypes} 
+                            setNewType={this.setNewType}
+                            deleteType={this.deleteType} />
           </Col>
         </Row>
     </Container>

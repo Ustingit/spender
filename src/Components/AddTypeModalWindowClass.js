@@ -44,10 +44,7 @@ export default class AddTypeModalWindowClass extends React.Component {
         this.setState({ newComment: e.target.value })
     }
 
-    handleSave(event){
-        var test = event.target.value;
-        console.log(test);
-
+    handleSave(){
         this.handleClose();
         
         if (this.props.setNewType) {

@@ -8,11 +8,12 @@ export class EditAndDeleteItemControl extends React.Component {
         this.state = {
             type: this.props.type,
             objectId: this.props.objectId
-        }
+        };
+        this.delete = this.delete.bind(this);
     }
 
     delete() {
-        alert("delete " + this.state.objectId + " !");
+        this.props.deleteType(this.state.type, this.state.objectId);
     }
 
     edit() {

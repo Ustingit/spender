@@ -78,7 +78,9 @@ class SpendTypes extends React.Component {
                                 this.props.incomeTypes.map(typeObjectInformation => { 
                                     return <ListGroup.Item key={typeObjectInformation.id} action 
                                                 onClick={ () => this.handleClick(typeObjectInformation.default) } >
-                                            <div>{typeObjectInformation.name} {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} objectId={typeObjectInformation.id} /> }</div>
+                                            <div>{typeObjectInformation.name} {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} 
+                                                                                                                                           objectId={typeObjectInformation.id} 
+                                                                                                                                           deleteType={this.props.deleteType} /> }</div>
                                     </ListGroup.Item>
                                 })
                             }
@@ -89,7 +91,9 @@ class SpendTypes extends React.Component {
                                     this.props.costsTypes.map(typeObjectInformation => { 
                                         return <ListGroup.Item key={typeObjectInformation.id} action 
                                                     onClick={ () => this.handleClick(typeObjectInformation.default) } >
-                                                <div>{typeObjectInformation.name}  {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_INCOME} objectId={typeObjectInformation.id} /> }</div>
+                                                <div>{typeObjectInformation.name}  {!typeObjectInformation.default && <EditAndDeleteItemControl type={HIGH_LEVEL_TYPE_COSTS} 
+                                                                                                                                                objectId={typeObjectInformation.id} 
+                                                                                                                                                deleteType={this.props.deleteType} /> }</div>
                                         </ListGroup.Item>
                                 })
                             }

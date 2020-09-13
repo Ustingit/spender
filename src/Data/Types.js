@@ -14,3 +14,31 @@ export let costTypes = [
     { id: 2, name: "пассивный доход", default: true, comment: "доходы, полученные от депозитов, инвестиций, и т.д.", type: HIGH_LEVEL_TYPE_INCOME },
     { id: 3, name: "подарок", default: true, comment: "средства, подаренные по какому-либо поводу.", type: HIGH_LEVEL_TYPE_INCOME }
 ]
+
+export let setNewList = (newList, type) => {
+    if (type === HIGH_LEVEL_TYPE_INCOME) {
+        console.log(incomeTypes);
+        incomeTypes = newList;
+        console.log(incomeTypes);
+    }
+
+    if (type === HIGH_LEVEL_TYPE_COSTS) {
+        console.log(costTypes);
+        costTypes = newList;
+        console.log(costTypes);
+    }
+}
+
+export let addItemToList = (newItem, type) => {
+    if (type === HIGH_LEVEL_TYPE_INCOME) {
+        console.log(incomeTypes);
+        incomeTypes = incomeTypes.concat(newItem);
+        console.log(incomeTypes);
+    }
+
+    if (type === HIGH_LEVEL_TYPE_COSTS) {
+        console.log(costTypes);
+        costTypes = costTypes.concat(newItem);
+        console.log(costTypes);
+    }
+}
