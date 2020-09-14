@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { ColoredLine } from '../Common/Lines/Lines'; 
 
 export default class SpendHistory extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class SpendHistory extends React.Component {
             <Container>
                 <Row>
                     <Col md={12} lg={12} >
-                        <h5>История расходов и приходов</h5><br />
+                        <h5 style={{ textAlign: "center" }} >История расходов и приходов</h5><br />
                     </Col>
                     <Col md={12} lg={12} >
                         <ListGroup>
@@ -35,9 +36,16 @@ export default class SpendHistory extends React.Component {
 }
 
 class HistoryItem extends React.Component {
+    divStyle = {
+
+    };
+
     render() {
         return(
-            <div key={this.props.data.id} >{this.props.data.sum} руб - {this.props.data.comment}</div>
+            <div style={{ textAlign: "center" }} key={this.props.data.id} >
+                <sub>{this.props.data.datePrintable}</sub><sup>приход</sup>{this.props.data.sum} руб - описание: {this.props.data.comment}
+                <ColoredLine color="black" />
+            </div>
         )
     }
 }
