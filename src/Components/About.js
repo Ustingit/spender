@@ -9,7 +9,7 @@ class About extends React.Component {
         return (
             <Container>
                 <Row>
-                    <Col>Spender app. by <a href="https://www.linkedin.com/in/yustinovich/" target="_blank" >Yuryi Ustsinovich</a></Col>
+                    <Col>Spender app. by <a href="https://www.linkedin.com/in/yustinovich/" rel="noopener noreferrer" target="_blank" >Yuryi Ustsinovich</a></Col>
                     <Col>Created for training some skills related to React library. I' trying to use it for controlling of the my spends. You can try as well!</Col>
                     <Col>All questions - <a href="mailto:ustinhtc@gmail.com?subject=spender's ABOUT link.">ustinhtc@gmail.com</a></Col>
                 </Row>

@@ -9,7 +9,16 @@ import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import RightWrapper, { WrapperType } from './Components/RightWrapper';
 import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, setNewList, addItemToList } from './Data/Types';
-import { Spends, getSpendsOrderedDESCByDate } from "./Data/Spends";
+import { getSpendsGroupedByDate } from "./Data/Spends";
+
+/* 
+TODO:
+
+1) add spend
+2) edit spend
+3) image for spend in list
+
+*/
 
 class App extends React.Component {
 
@@ -19,7 +28,7 @@ class App extends React.Component {
       type: WrapperType.HISTORY,
       incomeTypes: this.props.incomeTypes,
       costsTypes: this.props.costTypes,
-      history: getSpendsOrderedDESCByDate()
+      history: getSpendsGroupedByDate()
     }
     this.setNewType = this.setNewType.bind(this);
     this.deleteType = this.deleteType.bind(this);
@@ -31,11 +40,11 @@ class App extends React.Component {
   }
 
   deleteType(type, id) {
-      if (type = HIGH_LEVEL_TYPE_INCOME) {
+      if (type === HIGH_LEVEL_TYPE_INCOME) {
         let filteredArray = this.state.incomeTypes.filter(item => item.id !== id)
         this.setState({incomeTypes: filteredArray});
         setNewList(filteredArray, type);
-      } else if (type == HIGH_LEVEL_TYPE_COSTS) {
+      } else if (type === HIGH_LEVEL_TYPE_COSTS) {
         let filteredArray = this.state.costsTypes.filter(item => item.id !== id)
         this.setState({costsTypes: filteredArray});
         setNewList(filteredArray, type);

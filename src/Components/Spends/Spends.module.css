@@ -1,0 +1,29 @@
+.box {
+    height: 60px;
+}
+
+.element {
+    text-align: center;
+    clear: both;
+    height: 60px;
+}
+
+.element abbr {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.superscripts,
+.subscripts {
+    height: 6px;
+}
+
+.superscripts .supLeft {
+    float: left;
+    padding: 0 0 0 190px;
+}
+
+.subscripts .subLeft {
+    float: left;
+    padding: 24px 0 2px 2px;
+}

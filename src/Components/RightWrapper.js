@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import About from './About';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
