@@ -20,14 +20,15 @@ class RightWrapper extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            type: RightPageType.HISTORY
+            type: RightPageType.HISTORY,
+            history: props.history
         }
     }
 
     renderSwitch(param){
         switch (param) {
             case RightPageType.HISTORY:
-                return <SpendsHistory { ...this.props } />
+                return <SpendsHistory { ...this.props } history={this.state.history} historyHash={this.props.historyHash} />
             case RightPageType.ABOUT:
                 return <About />
             case RightPageType.SPEND_TYPES:

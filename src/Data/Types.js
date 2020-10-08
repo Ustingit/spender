@@ -16,28 +16,20 @@ export let costTypes = [
 
 export let setNewList = (newList, type) => {
     if (type === HIGH_LEVEL_TYPE_INCOME) {
-        console.log(incomeTypes);
         incomeTypes = newList;
-        console.log(incomeTypes);
     }
 
     if (type === HIGH_LEVEL_TYPE_COSTS) {
-        console.log(costTypes);
         costTypes = newList;
-        console.log(costTypes);
     }
 }
 
 export let addItemToList = (newItem, type) => {
     if (type === HIGH_LEVEL_TYPE_INCOME) {
-        console.log(incomeTypes);
         incomeTypes = incomeTypes.concat(newItem);
-        console.log(incomeTypes);
     }
 
     if (type === HIGH_LEVEL_TYPE_COSTS) {
-        console.log(costTypes);
         costTypes = costTypes.concat(newItem);
-        console.log(costTypes);
     }
 }

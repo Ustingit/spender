@@ -9,7 +9,8 @@ import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import RightWrapper, { WrapperType } from './Components/RightWrapper';
 import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, setNewList, addItemToList } from './Data/Types';
-import { getSpendsGroupedByDate } from "./Data/Spends";
+import { getSpendsGroupedByDate, setNewHistory, getSpends, groupByDateOrderedData } from "./Data/Spends";
+import { generateUUID } from './Utils/GuidHelper'; 
 
 /* 
 TODO:
@@ -21,18 +22,28 @@ TODO:
 */
 
 class App extends React.Component {
-
   constructor(props){
     super(props);
     this.state = {
       type: WrapperType.HISTORY,
       incomeTypes: this.props.incomeTypes,
       costsTypes: this.props.costTypes,
-      history: getSpendsGroupedByDate()
+      history: getSpendsGroupedByDate(),
+      historyHash: generateUUID()
     }
     this.setNewType = this.setNewType.bind(this);
     this.deleteType = this.deleteType.bind(this);
     this.editExistType = this.editExistType.bind(this);
+    this.deleteHistoryItem = this.deleteHistoryItem.bind(this);
+  }
+
+  deleteHistoryItem(id) {
+    let filteredHistory = getSpends().filter(item => item.id !== id);
+    setNewHistory(filteredHistory);
+    
+    this.setState({
+      historyHash: generateUUID()
+    })
   }
 
   changeType(newType){
@@ -112,7 +123,7 @@ class App extends React.Component {
     return (
     <Container>
       <Jumbotron>
-        Spender - app for calculating of your daily spends!
+        Spender - приложение для контроля ваших ежедневных трат!
       </Jumbotron>
         <Row>
           <Col md={3} lg={3}>
@@ -129,7 +140,9 @@ class App extends React.Component {
                             setNewType={this.setNewType}
                             deleteType={this.deleteType}
                             editType={this.editExistType}
-                            history={this.state.history} />
+                            history={this.state.history}
+                            deleteHistoryItem={this.deleteHistoryItem}
+                            historyHash={this.state.historyHash} />
           </Col>
         </Row>
     </Container>

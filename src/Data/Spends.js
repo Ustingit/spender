@@ -23,8 +23,28 @@ export let getSpendsOrderedDESCByDate = () => {
     }).sort((a, b) => b.dateAsDate - a.dateAsDate);
 }
 
+export let getSpends = () => {
+    return Spends.slice();
+}
+
+export let orderDescByDate = (items) => {
+    return items.slice().sort((a, b) => b.dateAsDate - a.dateAsDate);
+}
+
+export let groupByDate = (items) => {
+    return groupBy(items.slice(), 'datePrintable');
+}
+
+export let groupByDateOrderedData = (items) => {
+    return groupByDate(orderDescByDate(items));
+}
+
 export let getSpendsGroupedByDate = () => {
     let data = getSpendsOrderedDESCByDate();
 
     return groupBy(data, 'datePrintable');
+}
+
+export let setNewHistory = (newHistory) => {
+    Spends = newHistory;
 }

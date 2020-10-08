@@ -3,14 +3,26 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { ColoredLine } from '../Common/Lines/Lines'; 
 import css from '../Spends/Spends.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { getSpendsGroupedByDate } from "../../Data/Spends";
 
 export default class SpendHistory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            history: this.props.history
+            history: this.props.history,
+            historyHash: this.props.historyHash
+        }
+    }
+
+    componentDidUpdate(prevProps){
+        if(this.props.historyHash != prevProps.historyHash){
+            let groupedData = getSpendsGroupedByDate();
+            this.setState({
+                history: groupedData
+            })
         }
     }
 
@@ -27,7 +39,7 @@ export default class SpendHistory extends React.Component {
                         <ListGroup>
                             {
                                 Object.entries(this.state.history).map(entry => {
-                                    return <DateGroup key={index++} data={entry} />
+                                    return <DateGroup key={index++} data={entry} deleteItem={ this.props.deleteHistoryItem } />
                                 })
                             }
                         </ListGroup>
@@ -46,7 +58,7 @@ class DateGroup extends React.Component {
                 <div style={{ textAlign: "center" }} >
                      {
                          this.props.data[1].map(entry => {
-                             return <HistoryItem key={entry.id} data={entry} />
+                             return <HistoryItem key={entry.id} data={entry} deleteItem={this.props.deleteItem} />
                          })
                      }
                 </div>
@@ -59,8 +71,8 @@ class HistoryItem extends React.Component {
     render() {
         return(
             <div style={{ textAlign: "center" }} className={ css.box } key={this.props.data.id} >
-                <div className={ css.element } >{this.props.data.sum} руб - описание: {this.props.data.comment}</div>
-                </div>
+                <div className={ css.element } >{this.props.data.sum} руб - описание: {this.props.data.comment}   <a className={ css.fr } ><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.props.deleteItem(this.props.data.id) } /></a></div>
+                    </div>
         )
     }
 }
