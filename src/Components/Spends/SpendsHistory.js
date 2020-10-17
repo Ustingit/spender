@@ -10,6 +10,8 @@ import { getSpendsGroupedByDate,  } from "../../Data/Spends";
 import incomeImg from "../../Images/income.png";
 import outcomeImg from "../../Images/outcome.png";
 import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS } from "../../Data/Types"; 
+import { AddSpendWrapper } from "../Spends/AddSpendWrapper";
+import { ColoredLine } from "../Common/Lines/Lines";
 
 export default class SpendHistory extends React.Component {
     constructor(props) {
@@ -35,6 +37,9 @@ export default class SpendHistory extends React.Component {
         return (
             <Container>
                 <Row>
+                    <Col md={12} lg={12} style={{ textAlign: "center" }} >
+                        <AddSpendWrapper />
+                    </Col>
                     <Col md={12} lg={12} >
                         <h5 style={{ textAlign: "center" }} >История расходов и приходов</h5><br />
                     </Col>

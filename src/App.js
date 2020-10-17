@@ -17,7 +17,6 @@ TODO:
 
 1) add spend
 2) edit spend
-3) image for spend in list
 
 */
 
