@@ -8,6 +8,17 @@ export let Spends = [
     { id: 3, sum: 50.50, highType: HIGH_LEVEL_TYPE_INCOME, concreteTypeId: 2, date: "Sun Sep 30 2020 21:25:22 GMT+0300 (Moscow Standard Time)", comment: "сосед вернул за бутылку" },
 ]
 
+export let getIconByType = (type) => {
+    switch(type) {
+        case HIGH_LEVEL_TYPE_INCOME:
+            return "../../Images/income.png";
+        case HIGH_LEVEL_TYPE_COSTS:
+            return "../../Images/outcome.png";
+        default:
+            return null;
+    }
+}
+
 export let getSpendsOrderedDESCByDate = () => {
     return Spends.slice().map(originalItem => {
         const date = new Date(originalItem.date);

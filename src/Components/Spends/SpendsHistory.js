@@ -6,7 +6,10 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import css from '../Spends/Spends.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { getSpendsGroupedByDate } from "../../Data/Spends";
+import { getSpendsGroupedByDate,  } from "../../Data/Spends";
+import incomeImg from "../../Images/income.png";
+import outcomeImg from "../../Images/outcome.png";
+import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS } from "../../Data/Types"; 
 
 export default class SpendHistory extends React.Component {
     constructor(props) {
@@ -69,29 +72,17 @@ class DateGroup extends React.Component {
 
 class HistoryItem extends React.Component {
     render() {
+        var typeImagePath = null;
+        if (this.props.data.highType === HIGH_LEVEL_TYPE_INCOME) {
+            typeImagePath = incomeImg;
+        } else if (this.props.data.highType === HIGH_LEVEL_TYPE_COSTS) {
+            typeImagePath = outcomeImg;
+        }
+
         return(
             <div style={{ textAlign: "center" }} className={ css.box } key={this.props.data.id} >
-                <div className={ css.element } >{this.props.data.sum} руб - описание: {this.props.data.comment}   <a className={ css.fr } ><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.props.deleteItem(this.props.data.id) } /></a></div>
+                <div className={ css.element } ><img width="26" alt="type image" src={ typeImagePath } /> {this.props.data.sum} руб - описание: {this.props.data.comment}   <a className={ css.fr } ><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.props.deleteItem(this.props.data.id) } /></a></div>
                     </div>
         )
     }
 }
-
- /* 
- TODO: sup and sub:
-
-            http://jsfiddle.net/p8Zyc/
-
-            https://stackoverflow.com/questions/20008340/html-having-subscript-and-superscript-one-on-top-of-another
-            
-            <div class="box">
-    <div class="superscripts">
-        <sup class="sup-left">16</sup>
-    </div>
-    <div class="element"><abbr>O</abbr><br /> Oxygen</div>
-    <div class="subscripts">
-        <sub class="sub-left">16.00</sub>
-    </div>
-</div>
-            
-            */
