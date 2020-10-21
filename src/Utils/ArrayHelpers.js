@@ -4,3 +4,7 @@ export let groupBy = function(arr, key) {
       return rv;
     }, {});
 };
+
+export let getMaxByKey = function(arr, key) {
+    return arr.sort((a,b) => b[key] - a[key])[0][key];
+}

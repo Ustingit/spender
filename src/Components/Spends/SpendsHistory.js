@@ -11,7 +11,6 @@ import incomeImg from "../../Images/income.png";
 import outcomeImg from "../../Images/outcome.png";
 import { HIGH_LEVEL_TYPE_INCOME, HIGH_LEVEL_TYPE_COSTS } from "../../Data/Types"; 
 import { AddSpendWrapper } from "../Spends/AddSpendWrapper";
-import { ColoredLine } from "../Common/Lines/Lines";
 
 export default class SpendHistory extends React.Component {
     constructor(props) {
@@ -23,7 +22,7 @@ export default class SpendHistory extends React.Component {
     }
 
     componentDidUpdate(prevProps){
-        if(this.props.historyHash != prevProps.historyHash){
+        if(this.props.historyHash !== prevProps.historyHash){
             let groupedData = getSpendsGroupedByDate();
             this.setState({
                 history: groupedData
@@ -38,7 +37,7 @@ export default class SpendHistory extends React.Component {
             <Container>
                 <Row>
                     <Col md={12} lg={12} style={{ textAlign: "center" }} >
-                        <AddSpendWrapper />
+                        <AddSpendWrapper addSpend={this.props.addSpend} />
                     </Col>
                     <Col md={12} lg={12} >
                         <h5 style={{ textAlign: "center" }} >История расходов и приходов</h5><br />
@@ -86,7 +85,7 @@ class HistoryItem extends React.Component {
 
         return(
             <div style={{ textAlign: "center" }} className={ css.box } key={this.props.data.id} >
-                <div className={ css.element } ><img width="26" alt="type image" src={ typeImagePath } /> {this.props.data.sum} руб - описание: {this.props.data.comment}   <a className={ css.fr } ><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.props.deleteItem(this.props.data.id) } /></a></div>
+                <div className={ css.element } ><img width="26" src={ typeImagePath } /> {this.props.data.sum} руб - описание: {this.props.data.comment}   <a href="#" className={ css.fr } ><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.props.deleteItem(this.props.data.id) } /></a></div>
                     </div>
         )
     }

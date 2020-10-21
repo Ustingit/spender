@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import RightWrapper, { WrapperType } from './Components/RightWrapper';
 import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, setNewList, addItemToList } from './Data/Types';
-import { getSpendsGroupedByDate, setNewHistory, getSpends, groupByDateOrderedData } from "./Data/Spends";
+import { getSpendsGroupedByDate, setNewHistory, getSpends, getCurrentMaxIdById, addSpend } from "./Data/Spends";
 import { generateUUID } from './Utils/GuidHelper'; 
 
 /* 
@@ -34,6 +34,28 @@ class App extends React.Component {
     this.deleteType = this.deleteType.bind(this);
     this.editExistType = this.editExistType.bind(this);
     this.deleteHistoryItem = this.deleteHistoryItem.bind(this);
+    this.addSpendItem = this.addSpendItem.bind(this);
+  }
+
+  addSpendItem(item) {
+      var id = getCurrentMaxIdById();
+      var itemToAdd = {
+        id: id + 1, 
+        sum: item.sum,
+        highType: HIGH_LEVEL_TYPE_COSTS,
+        concreteTypeId: 2,
+        date: new Date().toString(),
+        comment: item.comment
+      };
+
+      addSpend(itemToAdd);
+
+      var updatedHistory = getSpendsGroupedByDate();
+      this.setState({
+        history: updatedHistory,
+        historyHash: generateUUID()
+      });
+      
   }
 
   deleteHistoryItem(id) {
@@ -141,7 +163,8 @@ class App extends React.Component {
                             editType={this.editExistType}
                             history={this.state.history}
                             deleteHistoryItem={this.deleteHistoryItem}
-                            historyHash={this.state.historyHash} />
+                            historyHash={this.state.historyHash}
+                            addSpend={this.addSpendItem} />
           </Col>
         </Row>
     </Container>
@@ -150,3 +173,23 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+/*
+
+Tips:
+
+1)
+componentWillUpdate(nextProps, nextState) {
+        alert("WillUpdate cur: " + this.state.show + ", " + this.state.sum + ", " + this.state.description + ". next: " + nextState.show + ", " + nextState.sum + ", " + nextState.description);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        alert("DidUpdate cur: " + this.state.show + ", " + this.state.sum + ", " + this.state.description + ". prev: " + prevState.show + ", " + prevState.sum + ", " + prevState.description);
+    }
+
+
+
+
+
+*/
