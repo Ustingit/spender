@@ -15,8 +15,10 @@ import { generateUUID } from './Utils/GuidHelper';
 /* 
 TODO:
 
-1) add spend
-2) edit spend
+1) edit spend
+2) move data to api
+3) add redux
+4) add graphics of spends
 
 */
 

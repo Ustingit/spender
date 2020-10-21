@@ -5,6 +5,15 @@ import Select from 'react-select';
 import { spendTypeOptions } from '../../Data/Spends';
 import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, incomeTypesSelectorData, costsTypesSelectorData } from '../../Data/Types';
 
+const customStyles = {
+    menu: () => ({
+      width: 200
+    }),
+    control: () => ({
+      width: 200
+    }),
+} // styles={customStyles}
+
 export class AddSpendWrapper extends React.Component {
     constructor(props) {
         super(props);
@@ -109,8 +118,8 @@ export class AddSpendWrapper extends React.Component {
                         <div>
                             <input type="text" value={this.state.description} onChange={ this.setDescription.bind(this) } placeholder="описание" />
                             <input type="text" value={this.state.sum} onChange={ this.setSum.bind(this) } placeholder="сумма" />
-                            <Select options={spendTypeOptions} onChange={ this.handleTypeChange } />
-                            <Select options={ this.state.subTypeOptions } onChange={ this.handleSubTypeChange } />
+                            <Select options={spendTypeOptions} onChange={ this.handleTypeChange } width='100px' noOptionsMessage={() => "типы отсутствуют"} placeholder='Тип' />
+                            <Select options={ this.state.subTypeOptions } onChange={ this.handleSubTypeChange } noOptionsMessage={() => "нет конкретных типов"} placeholder='Подтип' />
                         </div>
                         <div>
                             <button onClick={ this.hideModal.bind(this) } >отменить</button>&nbsp;
