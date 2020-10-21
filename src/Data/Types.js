@@ -14,6 +14,20 @@ export let costTypes = [
     { id: 2, name: "транспорт", default: true, comment: "расходы на транспорт, такси либо шэринг.", type: HIGH_LEVEL_TYPE_INCOME }
 ]
 
+export let incomeTypesSelectorData = () => {
+    return incomeTypes.map(obj => ({
+        value: obj.id,
+        label: obj.name
+    }))
+}
+
+export let costsTypesSelectorData = () => {
+    return costTypes.map(obj => ({
+        value: obj.id,
+        label: obj.name
+    }))
+}
+
 export let setNewList = (newList, type) => {
     if (type === HIGH_LEVEL_TYPE_INCOME) {
         incomeTypes = newList;

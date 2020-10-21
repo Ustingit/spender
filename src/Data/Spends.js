@@ -4,7 +4,7 @@ import { groupBy, getMaxByKey } from "../Utils/ArrayHelpers";
 export let spendTypeOptions = [
     { value: HIGH_LEVEL_TYPE_COSTS, label: 'расход' },
     { value: HIGH_LEVEL_TYPE_INCOME, label: 'доход' }
-  ]
+]
 
 export let Spends = [
     { id: 0, sum: 210.02 , highType: HIGH_LEVEL_TYPE_INCOME, concreteTypeId: 2, date: "Sun Sep 11 2020 21:25:22 GMT+0300 (Moscow Standard Time)", comment: "Васёк Олег отдали долгииии" },

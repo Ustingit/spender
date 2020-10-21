@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import Select from 'react-select';
 import { spendTypeOptions } from '../../Data/Spends';
-import { HIGH_LEVEL_TYPE_COSTS } from '../../Data/Types';
+import { HIGH_LEVEL_TYPE_COSTS, HIGH_LEVEL_TYPE_INCOME, incomeTypesSelectorData, costsTypesSelectorData } from '../../Data/Types';
 
 export class AddSpendWrapper extends React.Component {
     constructor(props) {
@@ -12,7 +12,9 @@ export class AddSpendWrapper extends React.Component {
             show: false,
             description: "",
             sum: "",
-            selectedType: null
+            selectedType: null,
+            selectedSubType: null,
+            subTypeOptions: []
         };
     }
 
@@ -54,7 +56,8 @@ export class AddSpendWrapper extends React.Component {
         var item = {
             sum: this.state.sum,
             comment: this.state.description,
-            selectedType: this.state.selectedType ? this.state.selectedType.value : HIGH_LEVEL_TYPE_COSTS
+            selectedType: this.state.selectedType ? this.state.selectedType.value : HIGH_LEVEL_TYPE_COSTS,
+            selectedSubType: this.state.selectedSubType
         }
     
         this.setState({ 
@@ -69,8 +72,31 @@ export class AddSpendWrapper extends React.Component {
     }
 
     handleTypeChange = selectedType => {
+        if (selectedType.value === HIGH_LEVEL_TYPE_COSTS) {
+            this.setState({ 
+                selectedType: selectedType,
+                subTypeOptions: costsTypesSelectorData(),
+                selectedSubType: null
+             });
+        }
+
+        if (selectedType.value === HIGH_LEVEL_TYPE_INCOME) {
+            this.setState({ 
+                selectedType: selectedType,
+                subTypeOptions: incomeTypesSelectorData(),
+                selectedSubType: null
+             });
+        }
+
         this.setState({ 
-            selectedType: selectedType
+            selectedType: selectedType,
+            selectedSubType: null
+         });
+    };
+
+    handleSubTypeChange = selectedSubType => {
+        this.setState({ 
+            selectedSubType: selectedSubType.value
          });
     };
 
@@ -84,6 +110,7 @@ export class AddSpendWrapper extends React.Component {
                             <input type="text" value={this.state.description} onChange={ this.setDescription.bind(this) } placeholder="описание" />
                             <input type="text" value={this.state.sum} onChange={ this.setSum.bind(this) } placeholder="сумма" />
                             <Select options={spendTypeOptions} onChange={ this.handleTypeChange } />
+                            <Select options={ this.state.subTypeOptions } onChange={ this.handleSubTypeChange } />
                         </div>
                         <div>
                             <button onClick={ this.hideModal.bind(this) } >отменить</button>&nbsp;

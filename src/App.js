@@ -43,7 +43,7 @@ class App extends React.Component {
         id: id + 1, 
         sum: item.sum,
         highType: item.selectedType,
-        concreteTypeId: 2,
+        concreteTypeId: item.selectedSubType,
         date: new Date().toString(),
         comment: item.comment
       };
