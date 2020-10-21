@@ -42,7 +42,7 @@ class App extends React.Component {
       var itemToAdd = {
         id: id + 1, 
         sum: item.sum,
-        highType: HIGH_LEVEL_TYPE_COSTS,
+        highType: item.selectedType,
         concreteTypeId: 2,
         date: new Date().toString(),
         comment: item.comment
@@ -188,7 +188,11 @@ componentWillUpdate(nextProps, nextState) {
         alert("DidUpdate cur: " + this.state.show + ", " + this.state.sum + ", " + this.state.description + ". prev: " + prevState.show + ", " + prevState.sum + ", " + prevState.description);
     }
 
-
+2)
+ this.setState(
+          { selectedOption },
+          () => console.log(`Option selected:`, this.state.selectedOption)
+        );
 
 
 

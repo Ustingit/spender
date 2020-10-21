@@ -1,6 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import Select from 'react-select';
+import { spendTypeOptions } from '../../Data/Spends';
+import { HIGH_LEVEL_TYPE_COSTS } from '../../Data/Types';
 
 export class AddSpendWrapper extends React.Component {
     constructor(props) {
@@ -8,7 +11,8 @@ export class AddSpendWrapper extends React.Component {
         this.state = {
             show: false,
             description: "",
-            sum: ""
+            sum: "",
+            selectedType: null
         };
     }
 
@@ -49,7 +53,8 @@ export class AddSpendWrapper extends React.Component {
 
         var item = {
             sum: this.state.sum,
-            comment: this.state.description
+            comment: this.state.description,
+            selectedType: this.state.selectedType ? this.state.selectedType.value : HIGH_LEVEL_TYPE_COSTS
         }
     
         this.setState({ 
@@ -63,6 +68,12 @@ export class AddSpendWrapper extends React.Component {
         }
     }
 
+    handleTypeChange = selectedType => {
+        this.setState({ 
+            selectedType: selectedType
+         });
+    };
+
     render() {
         return(<a style={{ textAlign: "center" }} onClick={ () => this.showModal() } >
             <FontAwesomeIcon size='3x' icon={ faPlusSquare } />
@@ -72,6 +83,7 @@ export class AddSpendWrapper extends React.Component {
                         <div>
                             <input type="text" value={this.state.description} onChange={ this.setDescription.bind(this) } placeholder="описание" />
                             <input type="text" value={this.state.sum} onChange={ this.setSum.bind(this) } placeholder="сумма" />
+                            <Select options={spendTypeOptions} onChange={ this.handleTypeChange } />
                         </div>
                         <div>
                             <button onClick={ this.hideModal.bind(this) } >отменить</button>&nbsp;
