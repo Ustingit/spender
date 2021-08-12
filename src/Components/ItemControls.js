@@ -8,23 +8,23 @@ export class EditAndDeleteItemControl extends React.Component {
         super(props);
         this.state = {
             type: this.props.type,
-            objectId: this.props.objectId
+            object: this.props.object
         };
         this.delete = this.delete.bind(this);
     }
 
     delete() {
-        this.props.deleteType(this.state.type, this.state.objectId);
+        this.props.deleteType(this.state.type, this.state.object.id);
     }
 
     edit() {
-        alert("edit " + this.state.objectId + " !");
+        alert("edit " + this.state.object.id + " !");
     }
 
     render() {
         return(
             <span style={{ float: "right" }} >
-               <EditTypeModalWindow type={this.state.type} objectId={this.state.objectId} editType={this.props.editType} />&nbsp;
+               <EditTypeModalWindow type={this.state.type} object={this.state.object} editType={this.props.editType} />&nbsp;
                 <a><FontAwesomeIcon icon={faTrashAlt} onClick={ () => this.delete() } /></a>
             </span>
         )

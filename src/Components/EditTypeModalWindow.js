@@ -10,16 +10,16 @@ export default class EditTypeModalWindow extends React.Component {
         this.state = {
             showModal: false,
             type: this.props.type,
-            objectId: this.props.objectId,
-            newTypeName: "",
-            newComment: ""
+            object: this.props.object,
+            newTypeName: this.props.object.name ? this.props.object.name : "",
+            newComment: this.props.object.comment ? this.props.object.comment : ""
         };
+        debugger
     }
 
     edit() {
-        alert("edit in modal");
         this.setState({ showModal: false });
-        this.props.editType(this.state.objectId, this.state.type, this.state.newTypeName, this.state.newComment);
+        this.props.editType(this.state.object.id, this.state.type, this.state.newTypeName, this.state.newComment);
     }
 
     handleShow() {
@@ -48,8 +48,8 @@ export default class EditTypeModalWindow extends React.Component {
                     <Modal.Title><h3>Редактирование типа</h3></Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                        <input type="text" placeholder="Впишите название" onChange={ this.onNameChange } /><br />
-                        <input type="text" placeholder="Впишите комментарий" onChange={ this.onCommentChange } />
+                        <input type="text" placeholder="Впишите название" value={this.state.newTypeName} onChange={ this.onNameChange } /><br />
+                        <input type="text" placeholder="Впишите комментарий" value={this.state.newComment} onChange={ this.onCommentChange } />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={() => this.handleClose()}>
